@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShipLog — AI-Powered Release Notes from GitHub</title>
+    <meta name="description" content="ShipLog connects to your GitHub repo and turns raw commits & PRs into polished, customer-ready release notes in seconds. $19/mo for indie hackers.">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#f0f0f0;line-height:1.6}
+        a{color:#7c8cf8;text-decoration:none}
+        .container{max-width:760px;margin:0 auto;padding:0 24px}
+        .badge{display:inline-block;background:#1a1a2e;border:1px solid #333;border-radius:20px;padding:6px 16px;font-size:13px;color:#7c8cf8;margin-bottom:32px}
+        h1{font-size:clamp(32px,6vw,60px);font-weight:800;line-height:1.1;margin-bottom:24px;letter-spacing:-1px}
+        .grad{background:linear-gradient(135deg,#7c8cf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero{padding:80px 0 60px}
+        .hero p{font-size:19px;color:#a0a0a0;line-height:1.6;margin-bottom:16px;max-width:560px}
+        .hero .quote{font-size:15px;color:#666;margin-bottom:48px;font-style:italic}
+        form{display:flex;gap:12px;flex-wrap:wrap;max-width:520px;margin-bottom:12px}
+        input[type=text],input[type=email]{flex:1;min-width:180px;background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:13px 16px;color:#f0f0f0;font-size:15px;outline:none}
+        input:focus{border-color:#7c8cf8}
+        button{background:linear-gradient(135deg,#7c8cf8,#a78bfa);border:none;border-radius:8px;padding:13px 28px;color:#fff;font-weight:700;font-size:15px;cursor:pointer;white-space:nowrap}
+        button:hover{opacity:.9}
+        button:disabled{opacity:.6;cursor:not-allowed}
+        .note{font-size:13px;color:#555;margin-top:4px}
+        .success{background:#0d2818;border:1px solid #1a5c35;border-radius:12px;padding:24px 32px;display:none;margin-bottom:12px}
+        .success h3{color:#4ade80;font-size:18px;margin-bottom:8px}
+        .success p{color:#a0a0a0}
+        .pain{background:#111;border-top:1px solid #222;border-bottom:1px solid #222;padding:60px 0}
+        .pain h2,.works h2,.vs h2,.cta-section h2{font-size:26px;font-weight:700;margin-bottom:40px;text-align:center}
+        .pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+        .card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;padding:24px}
+        .card .icon{font-size:28px;margin-bottom:12px}
+        .card p{color:#a0a0a0;font-size:14px;line-height:1.6;font-style:italic}
+        .works{padding:60px 0}
+        .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px}
+        .step{text-align:center}
+        .num{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#7c8cf8,#a78bfa);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:20px;font-weight:800;color:#fff}
+        .step h3{font-size:16px;font-weight:700;margin-bottom:8px}
+        .step p{color:#a0a0a0;font-size:14px}
+        .vs{background:#111;border-top:1px solid #222;border-bottom:1px solid #222;padding:60px 0}
+        .vs .sub{text-align:center;color:#666;margin-top:-30px;margin-bottom:40px;font-size:14px}
+        table{width:100%;border-collapse:collapse;font-size:14px}
+        th,td{padding:12px 16px;border-bottom:1px solid #222}
+        th{color:#a0a0a0;font-weight:400}
+        th:nth-child(2),td:nth-child(2){color:#7c8cf8;font-weight:600}
+        td:first-child{color:#c0c0c0}
+        .cta-section{padding:80px 0;text-align:center}
+        .cta-section p{font-size:17px;color:#a0a0a0;margin-bottom:40px}
+        .cta-section form{justify-content:center}
+        footer{border-top:1px solid #1a1a1a;padding:24px;text-align:center;color:#444;font-size:13px}
+    </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <div class="badge">✦ Early Access — Limited Spots</div>
+    <h1>Your release notes,<br><span class="grad">written by AI.</span></h1>
+    <p>ShipLog connects to your GitHub repo and turns raw commits &amp; PRs into polished, customer-ready release notes — in seconds.</p>
+    <p class="quote">"Writing release notes is a chore that stands between developers and their weekend."</p>
+
+    <div class="success" id="success">
+      <h3>🎉 You're on the list!</h3>
+      <p>We'll email you when ShipLog launches. Early backers get 3 months free.</p>
+    </div>
+
+    <form id="form1" onsubmit="handleSubmit(event,'form1')">
+      <input type="text" name="name" placeholder="Your name (optional)">
+      <input type="email" name="email" placeholder="your@email.com" required>
+      <button type="submit" id="btn1">Get Early Access →</button>
+    </form>
+    <p class="note">No spam. Unsubscribe anytime. Early backers get 3 months free.</p>
+  </div>
+</div>
+
+<div class="pain">
+  <div class="container">
+    <h2>Sound familiar?</h2>
+    <div class="pain-grid">
+      <div class="card"><div class="icon">😩</div><p>"Context switching from building to documenting is brutal."</p></div>
+      <div class="card"><div class="icon">📭</div><p>"Release notes become an afterthought — if they happen at all."</p></div>
+      <div class="card"><div class="icon">⏳</div><p>"Too tedious to sustain when shipping daily."</p></div>
+      <div class="card"><div class="icon">🤯</div><p>"Translating commits into user-friendly language takes time I don't have."</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="works">
+  <div class="container">
+    <h2>How ShipLog works</h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h3>Connect GitHub</h3><p>One OAuth click. ShipLog reads your commits and merged PRs.</p></div>
+      <div class="step"><div class="num">2</div><h3>Pick your tone</h3><p>Developer-facing, user-friendly, or executive summary — you choose.</p></div>
+      <div class="step"><div class="num">3</div><h3>Ship it</h3><p>One-click publish to your changelog page, or copy to paste anywhere.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="vs">
+  <div class="container">
+    <h2>ShipLog vs. the alternatives</h2>
+    <p class="sub">Other tools make you write manually. ShipLog writes for you.</p>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr><th></th><th>ShipLog</th><th>Beamer</th><th>Headway</th><th>AnnounceKit</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>AI auto-generates from commits</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+          <tr><td>GitHub native</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+          <tr><td>Multiple tones (dev/user/exec)</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+          <tr><td>Indie-hacker pricing</td><td>$19/mo</td><td>$29/mo</td><td>$29/mo</td><td>$79/mo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="cta-section">
+  <div class="container">
+    <h2>Stop skipping release notes.</h2>
+    <p>Join indie hackers and small teams who want to ship faster — and communicate it better.</p>
+    <form id="form2" onsubmit="handleSubmit(event,'form2')">
+      <input type="email" name="email" placeholder="your@email.com" required style="width:280px">
+      <button type="submit" id="btn2">Get Early Access →</button>
+    </form>
+    <p class="note" style="text-align:center;margin-top:12px">🔒 No spam. Early backers get 3 months free at launch.</p>
+  </div>
+</div>
+
+<footer>© 2025 ShipLog · Built by an indie hacker, for indie hackers</footer>
+
+<script>
+async function handleSubmit(e, formId) {
+  e.preventDefault();
+  const form = document.getElementById(formId);
+  const btnId = formId === 'form1' ? 'btn1' : 'btn2';
+  const btn = document.getElementById(btnId);
+  const emailInput = form.querySelector('[name=email]');
+  const nameInput = form.querySelector('[name=name]');
+  const email = emailInput ? emailInput.value : '';
+  const name = nameInput ? nameInput.value : '';
+  
+  btn.disabled = true;
+  btn.textContent = 'Joining...';
+  
+  try {
+    const res = await fetch('https://formspree.io/f/xpwrqkyw', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({email: email, name: name, _subject: 'New ShipLog signup: ' + email})
+    });
+    
+    if (res.ok) {
+      document.getElementById('success').style.display = 'block';
+      document.getElementById('form1').style.display = 'none';
+      if (formId === 'form2') {
+        form.innerHTML = '<p style="color:#4ade80;font-size:18px;font-weight:600">✅ You\'re already on the list!</p>';
+      }
+    } else {
+      throw new Error('Failed');
+    }
+  } catch(err) {
+    btn.disabled = false;
+    btn.textContent = 'Get Early Access →';
+    alert('Something went wrong. Please try again.');
+  }
+}
+</script>
+</body>
+</html>
