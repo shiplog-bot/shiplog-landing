@@ -1,8 +1,8 @@
-# ShipLog Landing Page
+# Proseflow Landing Page
 
-AI-powered release notes generator — landing page for validation.
+AI changelog generator from GitHub commits — landing page for validation.
 
 ## Setup
 - Next.js 14 app router
-- Email signup via Formspree
+- Email signup via GitHub Issues API
 - Deployed on Vercel
