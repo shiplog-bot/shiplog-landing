@@ -17,7 +17,7 @@ export async function POST(request) {
     const githubToken = process.env.GITHUB_TOKEN;
     if (githubToken) {
       try {
-        await fetch('https://api.github.com/repos/shiplog-bot/shiplog-signups/issues', {
+        const ghRes = await fetch('https://api.github.com/repos/shiplog-bot/shiplog-signups/issues', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${githubToken}`,
@@ -28,12 +28,17 @@ export async function POST(request) {
           body: JSON.stringify({
             title: `Signup: ${email}`,
             body: `**Name:** ${name || 'Not provided'}\n**Email:** ${email}\n**Time:** ${timestamp}\n**Source:** landing page`,
-            labels: ['signup'],
           }),
         });
+        if (!ghRes.ok) {
+          const errText = await ghRes.text();
+          console.error('GitHub issue creation failed:', ghRes.status, errText);
+        }
       } catch (ghErr) {
-        console.error('GitHub issue creation failed:', ghErr.message);
+        console.error('GitHub issue creation error:', ghErr.message);
       }
+    } else {
+      console.warn('GITHUB_TOKEN not set — signup not persisted to GitHub');
     }
 
     return Response.json({ success: true, message: "You're on the list!" });
