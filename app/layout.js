@@ -1,9 +1,9 @@
 export const metadata = {
-  title: 'ShipLog - Ship faster, document smarter',
-  description: 'AI-powered changelog generator that connects to GitHub and auto-writes your release notes. Stop context-switching. Start shipping.',
+  title: 'Proseflow — AI changelog generator from GitHub commits',
+  description: 'Exploring: an AI tool that reads your GitHub commits and PRs and writes customer-facing release notes for you. Sign up to get updates if we build it.',
   openGraph: {
-    title: 'ShipLog - Ship faster, document smarter',
-    description: 'AI-powered changelog generator that auto-writes release notes from your GitHub commits. $19/mo for indie hackers.',
+    title: 'Proseflow — AI changelog generator from GitHub commits',
+    description: 'Would you use an AI tool that auto-generates release notes from your GitHub commits? Sign up to follow along if we build it.',
     type: 'website',
   },
 };
